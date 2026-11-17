@@ -1,0 +1,9 @@
+# Settings shared by every experiment; other configs start with `base: _protocol` and override only what changes.
+seed: 42
+data:
+  val_size: 0.1          # share of train held out for validation (decide the split in the EDA notebook)
+train:
+  epochs: 1
+  batch_size: 16
+  lr: 2.0e-5
+wandb: false

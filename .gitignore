@@ -1,0 +1,28 @@
+# data and heavy outputs live outside git (Drive / Kaggle / local disk)
+/data/
+/outputs/
+/ai-generated-text-detection-hw3-ucu-ai-2026/
+*.csv.zip
+*.zip
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+wandb/
+
+# keep the small result tables
+!/results/**
+!/submissions/**
+
+# secrets
+kaggle.json
+access_token
+.env
+
+# python / jupyter
+__pycache__/
+*.egg-info/
+.ipynb_checkpoints/
+.DS_Store
+.venv/

@@ -1,0 +1,186 @@
+"""Where am I running? One place that resolves data/output folders for local, Colab and Kaggle.
+
+Every notebook calls `env.setup()` first, so the rest of the code never hardcodes a path.
+
+    local  : data -> <repo>/data            outputs -> <repo>/outputs
+    colab  : data -> /content/data          outputs -> Google Drive (survives a crashed session)
+    kaggle : data -> /kaggle/input/<comp>   outputs -> /kaggle/working/outputs (kept on "Save Version")
+
+Override any of them with the HWKIT_DATA / HWKIT_OUTPUTS / HWKIT_CACHE environment variables.
+"""
+from __future__ import annotations
+
+import os
+import random
+import shutil
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+
+COMPETITION = "ai-generated-text-detection-hw3-ucu-ai-2026"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DRIVE_ROOT = Path("/content/drive/MyDrive/ucu-hw3")
+
+
+def detect_platform() -> str:
+    if "KAGGLE_KERNEL_RUN_TYPE" in os.environ or Path("/kaggle/working").exists():
+        return "kaggle"
+    if "google.colab" in sys.modules or "COLAB_RELEASE_TAG" in os.environ:
+        return "colab"
+    return "local"
+
+
+@dataclass
+class Paths:
+    platform: str
+    data: Path      # folder that contains train.csv, test.csv, sample_submission.csv
+    outputs: Path   # persistent: runs/<run_id>/ with checkpoints, metrics, predictions
+    cache: Path     # fast throwaway disk: tokenized data, downloaded zips
+    repo: Path = REPO_ROOT
+
+    @property
+    def runs(self) -> Path:
+        return self.outputs / "runs"
+
+    def __str__(self) -> str:
+        return "\n".join(f"{k:>8}: {v}" for k, v in self.__dict__.items())
+
+
+def _kaggle_data_dir() -> Path:
+    for cand in (Path("/kaggle/input") / COMPETITION, Path("/kaggle/input/competitions") / COMPETITION):
+        if cand.exists():
+            return cand
+    return Path("/kaggle/input") / COMPETITION
+
+
+def get_paths(mount_drive: bool = True) -> Paths:
+    platform = detect_platform()
+    if platform == "kaggle":
+        data, outputs, cache = _kaggle_data_dir(), Path("/kaggle/working/outputs"), Path("/tmp/hwkit_cache")
+    elif platform == "colab":
+        if mount_drive and not Path("/content/drive/MyDrive").exists():
+            from google.colab import drive  # type: ignore
+            drive.mount("/content/drive")
+        data, outputs, cache = Path("/content/data"), DRIVE_ROOT / "outputs", Path("/content/cache")
+    else:
+        data, outputs, cache = REPO_ROOT / "data", REPO_ROOT / "outputs", REPO_ROOT / "outputs" / "cache"
+
+    paths = Paths(
+        platform=platform,
+        data=Path(os.environ.get("HWKIT_DATA", data)),
+        outputs=Path(os.environ.get("HWKIT_OUTPUTS", outputs)),
+        cache=Path(os.environ.get("HWKIT_CACHE", cache)),
+    )
+    for p in (paths.outputs, paths.runs, paths.cache):
+        p.mkdir(parents=True, exist_ok=True)
+    return paths
+
+
+def restore_kaggle_outputs(paths: Paths) -> None:
+    """On Kaggle, outputs of a previous notebook version can be attached as an input.
+    Copy any runs found there into /kaggle/working so training resumes instead of restarting."""
+    if paths.platform != "kaggle":
+        return
+    roots = [d for d in Path("/kaggle/input").iterdir() if d.is_dir() and d.name != "competitions"]
+    for z in [z for r in roots for z in r.rglob("outputs*.zip")]:   # a dataset uploaded as a zip and left packed
+        out = Path("/tmp/hwkit_inputs") / z.parent.name
+        if not out.exists():
+            shutil.unpack_archive(z, out)
+        roots.append(out)
+    found = sorted({s.parent.parent for r in roots for s in r.rglob("runs/*/stages.json")    # any layout,
+                    if "repo" not in s.parts})          # not the repo copy (results/runs: small files only)
+    for prev_runs in found:
+        for run_dir in sorted(d for d in prev_runs.iterdir() if d.is_dir()):
+            dst = paths.runs / run_dir.name
+            if not dst.exists():
+                shutil.copytree(run_dir, dst)
+                _register_restored(paths, dst)
+                print(f"restored run {run_dir.name} from {prev_runs}")
+
+
+def _register_restored(paths: Paths, run_dir: Path) -> None:
+    """Put the metrics of a restored run back into <outputs>/experiments.csv (the attached input brings
+    only the run folders, so without this the run table of the new session would miss them)."""
+    import json
+    import yaml
+    from .tracker import REGISTRY, _upsert_registry
+    metrics, cfg_file = run_dir / "metrics.json", run_dir / "config.yaml"
+    if not metrics.exists():
+        return
+    cfg = yaml.safe_load(cfg_file.read_text()) if cfg_file.exists() else {}
+    for eval_name, values in json.loads(metrics.read_text()).items():
+        _upsert_registry(paths.outputs / REGISTRY, run_dir.name, eval_name, cfg or {}, values)
+
+
+def seed_everything(seed: int = 42) -> None:
+    random.seed(seed)
+    os.environ["PYTHONHASHSEED"] = str(seed)
+    try:
+        import numpy as np
+        np.random.seed(seed)
+    except ImportError:
+        pass
+    try:
+        import torch
+        torch.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+    except ImportError:
+        pass
+
+
+def device() -> str:
+    try:
+        import torch
+        if torch.cuda.is_available():
+            return "cuda"
+        if torch.backends.mps.is_available():
+            return "mps"
+    except ImportError:
+        pass
+    return "cpu"
+
+
+def configure_warnings(log_file: Path) -> None:
+    """Every distinct warning is printed once, as one line, and appended to `log_file`.
+    DataLoader worker processes only write to the log, so a warning is not repeated per worker."""
+    import warnings
+    log_file.parent.mkdir(parents=True, exist_ok=True)
+    seen: set[str] = set()
+
+    def show(message, category, filename, lineno, file=None, line=None):
+        text = str(message).strip().splitlines()[0][:200]
+        where = f"{Path(filename).name}:{lineno}"
+        key = f"{category.__name__}: {text} [{where}]"
+        if key in seen:
+            return
+        seen.add(key)
+        with open(log_file, "a") as f:
+            f.write(key + "\n")
+        try:
+            from torch.utils.data import get_worker_info
+            in_worker = get_worker_info() is not None
+        except ImportError:
+            in_worker = False
+        if not in_worker:
+            print(f"warning: {key}", file=sys.stderr)
+
+    warnings.showwarning = show
+    # compile-time warnings about other packages' source (e.g. Colab's notebookapp.py); our code compiles cleanly
+    warnings.filterwarnings("ignore", category=SyntaxWarning)
+
+
+def warnings_summary(paths: Paths) -> list[str]:
+    """Distinct warnings logged so far (all sessions), to fix them at the source."""
+    f = paths.outputs / "warnings.log"
+    return sorted(set(f.read_text().splitlines())) if f.exists() else []
+
+
+def setup(seed: int = 42, mount_drive: bool = True) -> Paths:
+    """First call in every notebook. Safe to re-run."""
+    paths = get_paths(mount_drive=mount_drive)
+    configure_warnings(paths.outputs / "warnings.log")
+    restore_kaggle_outputs(paths)
+    seed_everything(seed)
+    print(paths)
+    print(f"  device: {device()}")
+    return paths

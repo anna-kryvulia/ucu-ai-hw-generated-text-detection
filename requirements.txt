@@ -1,0 +1,10 @@
+# Helpers only. torch comes preinstalled on Colab and Kaggle.
+# Add model libraries here as you start using them (check that they are not of Russian origin).
+numpy
+pandas
+pyyaml
+matplotlib
+scikit-learn
+tqdm
+kaggle
+wandb

@@ -1,0 +1,5 @@
+base: _protocol
+family: baseline
+description: "first simple model, the reference for every later experiment"
+model:
+  arch: tfidf_logreg      # replace with the real baseline
