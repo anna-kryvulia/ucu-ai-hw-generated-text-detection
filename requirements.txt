@@ -8,3 +8,5 @@ scikit-learn
 tqdm
 kaggle
 wandb
+# Hugging Face (US company): transformer models and tokenizers
+transformers

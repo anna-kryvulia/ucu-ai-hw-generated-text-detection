@@ -1,0 +1,16 @@
+base: _protocol
+family: encoder
+description: "XLM-RoBERTa base fine-tuned on the fixed 40k subsample; long texts read in 512-token chunks"
+model:
+  arch: xlm-roberta-base
+  max_len: 512              # tokens per chunk, including the two special tokens
+data:
+  subsample: sub40k         # same training texts as the baseline search
+train:
+  epochs: 3
+  batch_size: 16
+  lr: 2.0e-5
+  weight_decay: 0.01
+  warmup: 0.1               # share of steps in which the learning rate grows from 0 to lr
+  eval_batch_size: 64
+  monitor_size: 4000        # validation texts scored after each epoch (learning curve only)
