@@ -1,0 +1,2 @@
+run_id,eval,family,model,description,updated,features,domain,train_size,macro_f1,accuracy,macro_f1_testlike,f1_human,f1_fusion,f1_ai
+baseline_tfidf,val,baseline,LogReg C=32,TF-IDF word + character n-grams with classical linear models,2026-11-20 12:38:57,word+char,0.0,80000.0,0.871676600437142,0.8916874724629167,0.8656599159525088,0.8080793559516963,0.8219416630387462,0.9850087823209835

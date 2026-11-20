@@ -1,5 +1,15 @@
 base: _protocol
 family: baseline
-description: "first simple model, the reference for every later experiment"
+description: "TF-IDF word + character n-grams with classical linear models"
 model:
-  arch: tfidf_logreg      # replace with the real baseline
+  arch: tfidf_linear
+data:
+  max_chars: 5000            # TF-IDF reads the first 5000 characters (median text: ~2900); fits in 8 GB RAM
+  final_train_size: 80000    # final refit on a fixed sample of the training part (folds 1-9)
+features:
+  word: {ngram_range: [1, 2], min_df: 2, max_features: 200000, lowercase: true}
+  char: {ngram_range: [3, 5], min_df: 3, max_features: 200000, lowercase: false}   # keeps case and punctuation
+search:
+  logreg_C: [2, 8, 32]
+  svc_C: 0.5
+  nb_alpha: 0.1

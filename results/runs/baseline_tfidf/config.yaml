@@ -1,0 +1,37 @@
+seed: 42
+data:
+  val_size: 0.1
+  max_chars: 5000
+  final_train_size: 80000
+train:
+  epochs: 1
+  batch_size: 16
+  lr: 2.0e-05
+wandb: false
+family: baseline
+description: TF-IDF word + character n-grams with classical linear models
+model:
+  arch: tfidf_linear
+features:
+  word:
+    ngram_range:
+    - 1
+    - 2
+    min_df: 2
+    max_features: 200000
+    lowercase: true
+  char:
+    ngram_range:
+    - 3
+    - 5
+    min_df: 3
+    max_features: 200000
+    lowercase: false
+search:
+  logreg_C:
+  - 2
+  - 8
+  - 32
+  svc_C: 0.5
+  nb_alpha: 0.1
+name: baseline

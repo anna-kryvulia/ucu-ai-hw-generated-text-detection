@@ -30,11 +30,13 @@ def load_split(train: pd.DataFrame, path: str | Path = SPLIT_FILE) -> pd.DataFra
 
 
 def scores(y_true, y_pred, weight=None) -> dict:
-    """Macro-F1 (plain, and test-like weighted when `weight` is given), accuracy and per-class F1."""
-    out = {"macro_f1": f1_score(y_true, y_pred, labels=LABELS, average="macro"),
+    """Macro-F1 (plain, and test-like weighted when `weight` is given), accuracy and per-class F1.
+    A class that is never predicted gets F1 = 0 (zero_division=0), which is what Kaggle scores too."""
+    out = {"macro_f1": f1_score(y_true, y_pred, labels=LABELS, average="macro", zero_division=0),
            "accuracy": float(np.mean(np.asarray(y_true) == np.asarray(y_pred)))}
     if weight is not None:
-        out["macro_f1_testlike"] = f1_score(y_true, y_pred, labels=LABELS, average="macro", sample_weight=weight)
-    per_class = f1_score(y_true, y_pred, labels=LABELS, average=None)
+        out["macro_f1_testlike"] = f1_score(y_true, y_pred, labels=LABELS, average="macro",
+                                            sample_weight=weight, zero_division=0)
+    per_class = f1_score(y_true, y_pred, labels=LABELS, average=None, zero_division=0)
     out.update({f"f1_{c}": float(v) for c, v in zip(LABELS, per_class)})
     return {k: float(v) for k, v in out.items()}
