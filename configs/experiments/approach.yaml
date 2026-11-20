@@ -1,0 +1,12 @@
+base: _protocol
+family: approach
+description: "Post-processing of saved predictions: class weights for macro-F1, TF-IDF + XLM-R blend, stacking with domain"
+inputs:
+  encoder: encoder_xlmr          # reference: mean of all chunks
+  baseline: baseline_tfidf
+cv:
+  folds: 5                       # group folds inside the validation set; every score below is out-of-fold
+weights_grid: {low: -1.5, high: 1.5, steps: 25}   # class multipliers exp(low..high) for human and fusion; ai = 1
+blend_grid: 0.05                 # step of the TF-IDF share in the blend
+stack:
+  C: 1.0

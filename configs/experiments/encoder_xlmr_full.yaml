@@ -1,0 +1,7 @@
+base: encoder_xlmr
+description: "XLM-RoBERTa base fine-tuned on all training texts (folds 1-9); long texts read in 512-token chunks"
+data:
+  subsample: null           # no subsample: every text outside the validation fold (about 245k)
+train:
+  epochs: 2
+  warmup: 0.05

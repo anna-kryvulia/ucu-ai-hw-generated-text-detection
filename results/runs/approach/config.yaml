@@ -1,0 +1,24 @@
+seed: 42
+data:
+  val_size: 0.1
+train:
+  epochs: 1
+  batch_size: 16
+  lr: 2.0e-05
+wandb: false
+family: approach
+description: 'Post-processing of saved predictions: class weights for macro-F1, TF-IDF
+  + XLM-R blend, stacking with domain'
+inputs:
+  encoder: encoder_xlmr
+  baseline: baseline_tfidf
+cv:
+  folds: 5
+weights_grid:
+  low: -1.5
+  high: 1.5
+  steps: 25
+blend_grid: 0.05
+stack:
+  C: 1.0
+name: approach
