@@ -1,2 +1,4 @@
-run_id,eval,family,model,description,updated,features,domain,train_size,macro_f1,accuracy,macro_f1_testlike,f1_human,f1_fusion,f1_ai
-baseline_tfidf,val,baseline,LogReg C=32,TF-IDF word + character n-grams with classical linear models,2026-11-20 12:38:57,word+char,0.0,80000.0,0.871676600437142,0.8916874724629167,0.8656599159525088,0.8080793559516963,0.8219416630387462,0.9850087823209835
+run_id,eval,family,model,description,updated,features,domain,train_size,macro_f1,accuracy,macro_f1_testlike,f1_human,f1_fusion,f1_ai,aggregation
+encoder_xlmr,val,encoder,xlm-roberta-base,XLM-RoBERTa base fine-tuned on the fixed 40k subsample; long texts read in 512-token chunks,2026-11-20 12:27:24,,,,0.8975180939953993,0.9158466735203408,0.898465202665281,0.8286884587583326,0.8738919073491564,0.9899739158787088,mean
+encoder_xlmr,val_first_chunk,encoder,xlm-roberta-base,XLM-RoBERTa base fine-tuned on the fixed 40k subsample; long texts read in 512-token chunks,2026-11-20 12:27:24,,,,0.8577099490812556,0.8818475547070055,0.8598858561028419,0.7742770167427702,0.8127394636015326,0.986113366899464,first
+baseline_tfidf,val,baseline,LogReg C=32,TF-IDF word + character n-grams with classical linear models,2026-11-20 12:38:57,word+char,0.0,80000.0,0.871676600437142,0.8916874724629167,0.8656599159525088,0.8080793559516963,0.8219416630387462,0.9850087823209835,

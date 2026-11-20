@@ -1,0 +1,20 @@
+seed: 42
+data:
+  val_size: 0.1
+  subsample: sub40k
+train:
+  epochs: 3
+  batch_size: 16
+  lr: 2.0e-05
+  weight_decay: 0.01
+  warmup: 0.1
+  eval_batch_size: 64
+  monitor_size: 4000
+wandb: false
+family: encoder
+description: XLM-RoBERTa base fine-tuned on the fixed 40k subsample; long texts read
+  in 512-token chunks
+model:
+  arch: xlm-roberta-base
+  max_len: 512
+name: encoder_xlmr
