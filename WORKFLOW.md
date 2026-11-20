@@ -11,8 +11,9 @@ src/hwkit/      helpers shared by all notebooks
   tracker.py      runs: stages done, per-epoch history, metrics, experiments.csv (crash-safe)
   download.py     gets the competition data (Kaggle API) on Colab or the Mac
   submission.py   writes and checks the Kaggle submission CSV
+  split.py        load_split(): fixed validation split (fold 0) + test-like weights; scores(): macro-F1 etc.
 scripts/        status, collect_results, clean_notebook
-results/        small files committed to git: experiments.csv, runs/<id>/ metrics & history
+results/        small files committed to git: experiments.csv, runs/<id>/ metrics & history, split.csv.gz
 submissions/    submitted CSVs
 images/         figures for the report
 data/, outputs/ local only, git-ignored

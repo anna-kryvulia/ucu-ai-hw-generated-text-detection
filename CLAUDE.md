@@ -71,6 +71,10 @@ Independent work; cite external code and ideas.
 - Deadlines (23:59 Kyiv): Kaggle final submission **2026-11-23**; report and code on LMS **2026-11-24**.
 - A 20–50k fixed subsample is enough for a transformer; keep it fixed when comparing models.
 - Local data lives in `<repo>/data/` (git-ignored), where `env.py` looks for it.
+- Validation: `results/split.csv.gz` from `notebooks/01_eda.ipynb` (source groups by TF-IDF linking,
+  10 stratified group folds, fold 0 = validation, `weight` = test-like domain weights, `sub40k` = fixed
+  transformer subsample). Load with `hwkit.split.load_split`; score with `hwkit.split.scores` and compare
+  models on `macro_f1_testlike`.
 
 ## Lessons from HW2 (object detection)
 
