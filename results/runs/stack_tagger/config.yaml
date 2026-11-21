@@ -1,0 +1,26 @@
+seed: 42
+data:
+  val_size: 0.1
+train:
+  epochs: 1
+  batch_size: 16
+  lr: 2.0e-05
+wandb: false
+family: approach
+description: Stacker of notebook 09 with the per-text summaries of the token tagger
+  (notebook 10)
+inputs:
+  encoders:
+  - encoder_xlmr
+  - encoder_xlmr_full
+  baseline: baseline_tfidf
+  tagger: tagger_xlmr
+cv:
+  folds: 5
+logreg_C: 1.0
+boosting:
+  max_iter: 300
+  learning_rate: 0.05
+  max_leaf_nodes: 15
+  l2_regularization: 1.0
+name: stack_tagger

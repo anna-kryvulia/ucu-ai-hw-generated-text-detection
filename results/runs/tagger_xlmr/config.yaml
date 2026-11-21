@@ -1,0 +1,26 @@
+seed: 42
+data:
+  val_size: 0.1
+  subsample: null
+  n_fusion: 50000
+  n_human: 30000
+  n_ai: 20000
+train:
+  epochs: 2
+  batch_size: 16
+  lr: 2.0e-05
+  weight_decay: 0.01
+  warmup: 0.06
+  eval_batch_size: 64
+  monitor_size: 3000
+wandb: false
+family: tagger
+description: 'XLM-RoBERTa base token tagger: human vs AI-written tokens, labels from
+  the word diff of notebook 08'
+model:
+  arch: xlm-roberta-base
+  max_len: 512
+  num_labels: 2
+features:
+  smooth_window: 32
+name: tagger_xlmr

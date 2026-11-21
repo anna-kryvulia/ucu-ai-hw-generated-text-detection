@@ -26,3 +26,6 @@ __pycache__/
 .ipynb_checkpoints/
 .DS_Store
 .venv/
+
+# AI-written study notes: never commit (the report must be written without AI tools)
+/docs/study_notes.md

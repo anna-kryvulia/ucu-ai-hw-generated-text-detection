@@ -1,0 +1,4 @@
+base: stack_full
+description: "Stacker of notebook 09 with the per-text summaries of the token tagger (notebook 10)"
+inputs:
+  tagger: tagger_xlmr            # run with features_val.csv / features_test.csv
