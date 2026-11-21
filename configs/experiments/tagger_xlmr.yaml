@@ -1,0 +1,16 @@
+base: encoder_xlmr
+family: tagger
+description: "XLM-RoBERTa base token tagger: human vs AI-written tokens, labels from the word diff of notebook 08"
+model:
+  num_labels: 2
+data:
+  subsample: null
+  n_fusion: 50000           # training-part texts per class (fusion only with labelled spans)
+  n_human: 30000
+  n_ai: 20000
+train:
+  epochs: 2
+  warmup: 0.06
+  monitor_size: 3000
+features:
+  smooth_window: 32         # tokens averaged before taking the max / min of the AI probability

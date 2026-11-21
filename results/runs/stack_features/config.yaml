@@ -1,0 +1,23 @@
+seed: 42
+data:
+  val_size: 0.1
+train:
+  epochs: 1
+  batch_size: 16
+  lr: 2.0e-05
+wandb: false
+family: approach
+description: Stacker on the validation fold with chunk-shape, seam and style features
+inputs:
+  encoders:
+  - encoder_xlmr
+  baseline: baseline_tfidf
+cv:
+  folds: 5
+logreg_C: 1.0
+boosting:
+  max_iter: 300
+  learning_rate: 0.05
+  max_leaf_nodes: 15
+  l2_regularization: 1.0
+name: stack

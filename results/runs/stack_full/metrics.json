@@ -1,0 +1,26 @@
+{
+  "linear, reference features": {
+    "macro_f1": 0.9479388818847919,
+    "accuracy": 0.9568952856513439,
+    "macro_f1_testlike": 0.9467226916804824,
+    "f1_human": 0.9156105561353809,
+    "f1_fusion": 0.9307881625547751,
+    "f1_ai": 0.9974179269642198
+  },
+  "gradient boosting, reference features": {
+    "macro_f1": 0.9569039880414353,
+    "accuracy": 0.9642017917462182,
+    "macro_f1_testlike": 0.9546124305492117,
+    "f1_human": 0.9306504306504306,
+    "f1_fusion": 0.9426851294400963,
+    "f1_ai": 0.9973764040337788
+  },
+  "gradient boosting, all features": {
+    "macro_f1": 0.9663938363734442,
+    "accuracy": 0.9719856072844765,
+    "macro_f1_testlike": 0.9642350448154439,
+    "f1_human": 0.9462651313847062,
+    "f1_fusion": 0.9554170951545581,
+    "f1_ai": 0.9974992825810683
+  }
+}

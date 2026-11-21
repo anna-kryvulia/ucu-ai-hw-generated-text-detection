@@ -1,0 +1,10 @@
+base: _protocol
+family: approach
+description: "Stacker on the validation fold with chunk-shape, seam and style features"
+inputs:
+  encoders: [encoder_xlmr]       # runs with saved chunk probabilities (add encoder_xlmr_full when it is done)
+  baseline: baseline_tfidf
+cv:
+  folds: 5                       # same group folds as notebook 04
+logreg_C: 1.0
+boosting: {max_iter: 300, learning_rate: 0.05, max_leaf_nodes: 15, l2_regularization: 1.0}

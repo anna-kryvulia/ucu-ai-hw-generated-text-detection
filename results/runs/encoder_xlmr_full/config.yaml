@@ -1,0 +1,20 @@
+seed: 42
+data:
+  val_size: 0.1
+  subsample: null
+train:
+  epochs: 2
+  batch_size: 16
+  lr: 2.0e-05
+  weight_decay: 0.01
+  warmup: 0.05
+  eval_batch_size: 64
+  monitor_size: 4000
+wandb: false
+family: encoder
+description: XLM-RoBERTa base fine-tuned on all training texts (folds 1-9); long texts
+  read in 512-token chunks
+model:
+  arch: xlm-roberta-base
+  max_len: 512
+name: encoder_xlmr_full

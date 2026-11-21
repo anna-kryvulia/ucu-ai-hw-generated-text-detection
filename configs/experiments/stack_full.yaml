@@ -1,0 +1,4 @@
+base: stack
+description: "Stacker of notebook 07 with the chunk probabilities of both encoders (40k and full data)"
+inputs:
+  encoders: [encoder_xlmr, encoder_xlmr_full]
