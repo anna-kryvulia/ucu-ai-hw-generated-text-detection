@@ -1,0 +1,9 @@
+base: tagger_xlmr
+description: "Second token tagger: all labelled fusion texts, more human and ai texts, another seed"
+seed: 7                     # sampling, head initialization and batch order differ from the first tagger
+data:
+  n_fusion: null            # all training-part fusion texts with labelled AI sections (68,679)
+  n_human: 40000
+  n_ai: 25000
+inputs:
+  first_tagger: tagger_xlmr # its model.pt must be attached as a Kaggle input (output of notebook 10)

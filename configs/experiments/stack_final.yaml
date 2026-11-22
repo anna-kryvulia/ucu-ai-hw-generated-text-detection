@@ -1,0 +1,12 @@
+base: stack_tagger
+description: "Stacker of notebook 11 with finer tagger features, a second tagger, tuned and bagged gradient boosting"
+inputs:
+  tagger_tokens: tagger_xlmr2   # run holding tokens_tagger1_{val,test}.npz and tokens_{val,test}.npz
+features:
+  windows: [8, 16, 32]          # token windows for the smoothed AI probability
+boosting_grid:                  # settings tried on top of the reference (max_iter, learning_rate, max_leaf_nodes)
+  - {max_iter: 300, learning_rate: 0.05, max_leaf_nodes: 15}
+  - {max_iter: 600, learning_rate: 0.025, max_leaf_nodes: 15}
+  - {max_iter: 300, learning_rate: 0.05, max_leaf_nodes: 31}
+  - {max_iter: 600, learning_rate: 0.025, max_leaf_nodes: 31}
+bagging: {copies: 5, max_features: 0.5}   # copies that see a random half of the features at each split
