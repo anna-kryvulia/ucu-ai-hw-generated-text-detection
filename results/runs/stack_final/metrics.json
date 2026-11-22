@@ -1,0 +1,34 @@
+{
+  "+ finer features, first tagger": {
+    "macro_f1": 0.9719521572520521,
+    "accuracy": 0.9766485533852254,
+    "macro_f1_testlike": 0.9699081491666912,
+    "f1_human": 0.9546260715341413,
+    "f1_fusion": 0.9633615477629988,
+    "f1_ai": 0.9978688524590164
+  },
+  "two taggers averaged (all summaries)": {
+    "macro_f1": 0.9729569637048501,
+    "accuracy": 0.9774195917168453,
+    "macro_f1_testlike": 0.9709938110318229,
+    "f1_human": 0.9566757694294782,
+    "f1_fusion": 0.9644909563849737,
+    "f1_ai": 0.9977041653000984
+  },
+  "+ finer features and two taggers": {
+    "macro_f1": 0.9733205569256812,
+    "accuracy": 0.9777133206050815,
+    "macro_f1_testlike": 0.9712046673497127,
+    "f1_human": 0.9571766095688128,
+    "f1_fusion": 0.9651626950526189,
+    "f1_ai": 0.9976223661556121
+  },
+  "+ finer features and two taggers | trees 300, lr 0.05, leaves 15": {
+    "macro_f1": 0.9733205569256812,
+    "accuracy": 0.9777133206050815,
+    "macro_f1_testlike": 0.9712046673497127,
+    "f1_human": 0.9571766095688128,
+    "f1_fusion": 0.9651626950526189,
+    "f1_ai": 0.9976223661556121
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "val_tokens_first": {
+    "token_f1": 0.9922958786798052,
+    "token_f1_fusion": 0.9640868222727432
+  },
+  "val_tokens_second": {
+    "token_f1": 0.9933091585466431,
+    "token_f1_fusion": 0.9678679689113808
+  },
+  "val_tokens_average": {
+    "token_f1": 0.9933643525325015,
+    "token_f1_fusion": 0.9682802277781954
+  }
+}
