@@ -30,5 +30,37 @@
     "f1_human": 0.9571766095688128,
     "f1_fusion": 0.9651626950526189,
     "f1_ai": 0.9976223661556121
+  },
+  "+ finer features and two taggers | trees 600, lr 0.025, leaves 15": {
+    "macro_f1": 0.973444260349546,
+    "accuracy": 0.9778234689381701,
+    "macro_f1_testlike": 0.9715449719562441,
+    "f1_human": 0.9574530949918747,
+    "f1_fusion": 0.9651753325272068,
+    "f1_ai": 0.9977043535295564
+  },
+  "+ finer features and two taggers | trees 300, lr 0.05, leaves 31": {
+    "macro_f1": 0.9735588008913888,
+    "accuracy": 0.9779336172712586,
+    "macro_f1_testlike": 0.9718133436045443,
+    "f1_human": 0.9574719432959244,
+    "f1_fusion": 0.965458834916218,
+    "f1_ai": 0.997745624462024
+  },
+  "+ finer features and two taggers | trees 600, lr 0.025, leaves 31": {
+    "macro_f1": 0.9728873279217624,
+    "accuracy": 0.9773828756058158,
+    "macro_f1_testlike": 0.9710583442101156,
+    "f1_human": 0.9563996452852498,
+    "f1_fusion": 0.9645167140180136,
+    "f1_ai": 0.997745624462024
+  },
+  "+ finer features and two taggers | trees 300, lr 0.05, leaves 31 | bagged x5": {
+    "macro_f1": 0.9735033940475243,
+    "accuracy": 0.9778969011602291,
+    "macro_f1_testlike": 0.9717626409027833,
+    "f1_human": 0.9574530949918747,
+    "f1_fusion": 0.9652294853963839,
+    "f1_ai": 0.9978276017543141
   }
 }

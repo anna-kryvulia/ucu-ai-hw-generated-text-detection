@@ -10,3 +10,5 @@ kaggle
 wandb
 # Hugging Face (US company): transformer models and tokenizers
 transformers
+# SHAP (S. Lundberg, University of Washington / Microsoft Research, US): explanations in notebook 14
+shap

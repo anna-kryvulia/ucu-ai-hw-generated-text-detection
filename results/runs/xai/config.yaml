@@ -1,0 +1,57 @@
+seed: 42
+data:
+  val_size: 0.1
+train:
+  epochs: 1
+  batch_size: 16
+  lr: 2.0e-05
+wandb: false
+family: approach
+description: 'Explanations of the final model: tagger token probabilities on example
+  texts, SHAP values of the stacker'
+inputs:
+  encoders:
+  - encoder_xlmr
+  - encoder_xlmr_full
+  baseline: baseline_tfidf
+  tagger: tagger_xlmr
+  tagger_tokens: tagger_xlmr2
+cv:
+  folds: 5
+logreg_C: 1.0
+boosting:
+  max_iter: 300
+  learning_rate: 0.05
+  max_leaf_nodes: 15
+  l2_regularization: 1.0
+features:
+  windows:
+  - 8
+  - 16
+  - 32
+boosting_grid:
+- max_iter: 300
+  learning_rate: 0.05
+  max_leaf_nodes: 15
+- max_iter: 600
+  learning_rate: 0.025
+  max_leaf_nodes: 15
+- max_iter: 300
+  learning_rate: 0.05
+  max_leaf_nodes: 31
+- max_iter: 600
+  learning_rate: 0.025
+  max_leaf_nodes: 31
+bagging:
+  copies: 5
+  max_features: 0.5
+explain:
+  boosting:
+    max_iter: 300
+    learning_rate: 0.05
+    max_leaf_nodes: 31
+  shap_texts: 3000
+  context_tokens: 40
+  boundary_tokens: 40
+  min_word_count: 100
+name: xai

@@ -1,0 +1,8 @@
+base: stack_final
+description: "Explanations of the final model: tagger token probabilities on example texts, SHAP values of the stacker"
+explain:
+  boosting: {max_iter: 300, learning_rate: 0.05, max_leaf_nodes: 31}   # best single setting of notebook 13
+  shap_texts: 3000        # validation texts whose SHAP values are computed (the same number from each class)
+  context_tokens: 40      # tokens shown before and after the highlighted part of an example text
+  boundary_tokens: 40     # tokens on each side of an AI-section boundary in the boundary profile
+  min_word_count: 100     # words seen fewer times in human texts are left out of the false-alarm table
