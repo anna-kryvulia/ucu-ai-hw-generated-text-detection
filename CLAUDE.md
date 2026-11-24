@@ -3,19 +3,13 @@
 Read this file first. It holds everything decided in earlier homeworks, so the user does not have to
 explain it again. `WORKFLOW.md` describes the repo layout and the helper code.
 
-## The user
-
-Anna Kryvulia, student of the UCU AI 2026 course (GitHub `anna-kryvulia`, Kaggle `annakryvulia`), works on
-a Mac. Background in CV/ML is limited: explain every term fully, in plain words, the first time it appears.
-
 ## How to work with the user (rules from earlier homeworks)
 
 - **Do not execute code yourself.** Write the code and give the commands; the user runs them and pastes
   the output. If the next piece of code depends on an earlier output, ask the user to run it first.
 - On the Mac use `python3`, not `python`. Give each shell command in its own ```bash block.
 - The user commits and pushes. Give the git commands; do not commit on your own.
-- Notebooks: every code cell starts with a one-line comment saying what it does. No meta notes in
-  notebooks (no "✍️ Your conclusions", no "Runs on ..." hints), no empty cells.
+- Notebooks: every code cell starts with a one-line comment saying what it does.
 - **Notebooks must run without errors or warnings** (graded). Fix the cause of a warning instead of
   hiding it. `env.setup()` logs every distinct warning; the last cell of each notebook prints
   `env.warnings_summary(P)`, which should be empty.
@@ -24,15 +18,12 @@ a Mac. Background in CV/ML is limited: explain every term fully, in plain words,
 - **No models, libraries or tools of Russian origin.** Check the origin before suggesting anything.
   Known cases: WBF / `ensemble-boxes` (Russian author), Albumentations (mostly Russian founders),
   CatBoost (Yandex), ruBERT and other Russian-made models.
-- The report (`report.md`) is written by the user. Help with plans, tables (Markdown pipe tables),
-  checking numbers and wording, but keep it in the user's voice.
 
 ## HW3 deliverables and grading
 
 HW3 has no GitHub Pages report template (unlike HW2): code and the report go to the **LMS**, followed
 by a one-on-one defense. The report is **1–2 pages of text** (tables and figures may go in an
-appendix); longer reports lose points. It must not be written by AI tools (code may be). It names the
-two selected Kaggle submission files.
+appendix); longer reports lose points. It names the two selected Kaggle submission files.
 
 | Part | Points | What they expect |
 |---|---|---|

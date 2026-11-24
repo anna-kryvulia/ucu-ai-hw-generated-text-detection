@@ -6,6 +6,7 @@ classify English and German texts as `human`, `ai` or `fusion` (a human text wit
 macro-F1.
 
 **Final submissions:** `submissions/stack_final.csv` (notebook 13) and `submissions/stack_tagger.csv` (notebook 11).
+Private leaderboard: 0.96831 (`stack_final.csv`).
 
 ## Final model
 
@@ -40,15 +41,15 @@ flowchart LR
 Validation = fold 0 of a group split of `train.csv` (27,236 texts; a human text and its ai/fusion versions stay on
 one side), scored with test-like domain weights (notebook 01).
 
-| notebook | model | validation macro-F1 | public LB |
-|---|---|---|---|
-| 02 | TF-IDF word + char n-grams, logistic regression | 0.866 | 0.869 |
-| 03 | XLM-R base, 40k texts, mean over all chunks | 0.899 | 0.893 |
-| 04 | linear stacker on 02 + 03, domain, length | 0.918 | 0.920 |
-| 06 | XLM-R base, 245k texts | 0.936 | 0.935 |
-| 09 | gradient-boosting stacker, both encoders, chunk shape, style | 0.964 | 0.964 |
-| 11 | + token tagger features | 0.967 | 0.968 |
-| **13** | **+ finer tagger features, second tagger, tuned and bagged boosting** | **0.972** | **0.971** |
+| notebook | model | validation macro-F1 | public LB | private LB |
+|---|---|---|---|---|
+| 02 | TF-IDF word + char n-grams, logistic regression | 0.866 | 0.869 | 0.860 |
+| 03 | XLM-R base, 40k texts, mean over all chunks | 0.899 | 0.893 | 0.894 |
+| 04 | linear stacker on 02 + 03, domain, length | 0.918 | 0.920 | 0.916 |
+| 06 | XLM-R base, 245k texts | 0.936 | 0.935 | 0.933 |
+| 09 | gradient-boosting stacker, both encoders, chunk shape, style | 0.964 | 0.964 | 0.960 |
+| 11 | + token tagger features | 0.967 | 0.968 | 0.964 |
+| **13** | **+ finer tagger features, second tagger, tuned and bagged boosting** | **0.972** | **0.971** | **0.968** |
 
 Notebook 14 explains the final model (token probabilities on example texts, SHAP values of the stacker). Every run's
 metrics are in `results/experiments.csv` and `results/runs/<run>/metrics.json`.
@@ -148,4 +149,3 @@ kaggle competitions submit -c ai-generated-text-detection-hw3-ucu-ai-2026 -f sub
   (Lundberg & Lee, 2017) for notebook 14.
 - Ideas: token-level boundary detection as in SemEval-2024 Task 8, subtask C (Wang et al., 2024); dataset:
   GhostWriter (Schaaf, Bönisch, Mehler, LREC 2026).
-- Code written with the help of Claude (Anthropic) as a coding assistant; the report is written without AI tools.
